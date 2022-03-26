@@ -1,32 +1,38 @@
 import random
 class Produto(object):
-    def __init__(self,name_company=None,total_product=None,payment_type=None,troco=None):
+    def __init__(self,name_company=None,total_product=None,total_product_payment=None,payment_type=None,troco=None,payment_type_value=0):
         self.name_company=name_company
         self.product=[]
         self.total_product=total_product
         self.payment_type=payment_type
+        self.payment_type_value=payment_type_value
         self.troco=troco
+        self.total_product_payment=total_product_payment
     
 
     @property
-    def payment_type(self):
-        return self._payment_type
+    def payment_type_value(self):
+        return self._payment_type_value
 
-    @payment_type.setter
-    def payment_type(self,value):
-        print(value)
+    @payment_type_value.setter
+    def payment_type_value(self,value):
         if value == 1:
-            self._payment_type=0
-            pass
+            self.payment_type="Debito"
+            self._payment_type_value=0
+
         elif value == 2:
-            self._payment_type=3.54
-            pass
+            self.payment_type="Credito"
+            self._payment_type_value=3.54
+
         elif value == 3:
-            self._payment_type=3.12
-            pass
+            self.payment_type="Dinheiro"
+            self._payment_type_value=3.12
+
+
         elif value == 4:
-            self._payment_type=1.85
-            pass
+            self.payment_type="Pix"
+            self._payment_type_value=1.85
+
         else:
             print("Número invalido")
             return False
@@ -38,14 +44,30 @@ class Produto(object):
         return random.randint(range_start,range_end)
     
     def sum_sales(self):
-        print(self.product)
         self.total_product=sum(self.product)
-        print(self.name_company)
+        self.taxa_payment()
         count=0
         for  product in self.product:
             count+=1
             print(f'Produto {count}: R$ {product}')
-        print(f"Total: {self.total_product}")
+        print(f"Total: {self.total_product_payment}")
+    
+    def taxa_payment(self):
+        print("passou aqui")
+        print(self.payment_type)
+        if self.payment_type == "Credito":
+            print("passou aqui")
+            print(self.total_product)
+            print(self.payment_type_value)
+            print("passou aqui")
+            self.total_product_payment=self.total_product+(self.payment_type_value*self.total_product)
+            return self.total_product_payment
+        elif self.payment_type == "Dinheiro":
+           pass
+        else:
+            self.total_product_payment=self.total_product-(self.payment_type_value*self.total_product)
+            return self.total_product_payment
+            
           
     def select_product(self):
         print("Digite o numero de produtos no carrinho")
