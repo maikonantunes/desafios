@@ -1,2 +1,2 @@
 import random
-print(random.sample(range(61),k=5))
+print(random.sample(range(61),k=6))
